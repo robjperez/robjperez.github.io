@@ -1,4 +1,4 @@
-`name: Build and Publish Blog
+name: Build and Publish Blog
 
 on: [push]
 
