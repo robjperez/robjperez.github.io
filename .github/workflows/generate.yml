@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Generate the blog daily at midnight
 
 permissions:
   contents: read
@@ -22,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: 'true'
-          
+
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
