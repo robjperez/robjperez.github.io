@@ -1,0 +1,21 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Roberto blog'
+theme = 'hugo-simple'
+
+[[menu.main]]
+name = "Home"
+pageRef = "/"
+weight = 10
+
+[[menu.main]]
+name = "Blog"
+pageRef = "/blog"
+weight = 20
+
+[services.rss]
+limit = 42
+
+[outputs]
+# Disable section RSS
+section = ["html"]
