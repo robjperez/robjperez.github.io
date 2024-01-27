@@ -1,0 +1,28 @@
+name: Build and Publish Blog
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: '1.21.x'
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21.x'
+
+      - name: Install dependencies
+        run: |
+          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
+          go mod download 
+
+      - name: Build blog
+        run: |
+          export PATH=$PATH:~/go/bin
+          bash generate_blog.sh

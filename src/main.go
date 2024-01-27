@@ -38,6 +38,7 @@ date = "%s"
 
 	fileName := fmt.Sprintf("%s/%s.md", outputFolder, entry.id)
 	os.WriteFile(fileName, []byte(entryStr), 0644)
+	fmt.Printf("Creating %s", fileName)
 }
 
 func fetchEntries() ([]byte, error) {

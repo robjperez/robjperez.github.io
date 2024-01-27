@@ -1,0 +1,3 @@
+blog/public
+blog/*.lock
+blog/content/blog/*.md
