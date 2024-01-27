@@ -4,4 +4,4 @@
 go run src/main.go
 
 # Build blog
-hugo
+cd blog && hugo
