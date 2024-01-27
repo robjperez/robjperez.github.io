@@ -4,7 +4,4 @@
 go run src/main.go
 
 # Build blog
-cd blog
-ls -R content
-hugo
-ls -R public
+cd blog && hugo
