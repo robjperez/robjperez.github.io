@@ -3,9 +3,6 @@ name: Build and Publish Blog
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *" # Generate the blog daily at midnight
 
 permissions:
   contents: read
@@ -18,12 +15,30 @@ defaults:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: 'true'
+          submodules: 'true'        
+
+      - name: Install emacs
+        run: |
+          sudo apt-get install emacs
+          mkdir ~/.emacs.d && touch ~/.emacs.d/init.el
+
+      - name: Install ox-hugo and generate content
+        run: |
+          emacs --batch --eval "(progn
+          (require 'package)
+          (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
+          (package-initialize)
+          (package-refresh-contents)
+          (package-install 'ox-hugo)
+          (require 'ox-hugo)
+          (dolist (file (directory-files-recursively \"./entries\" \"\\.org$\"))
+                    (with-current-buffer (find-file-noselect file)
+                      (org-hugo-export-wim-to-md))))"
 
       - name: Setup Go
         uses: actions/setup-go@v4
@@ -32,28 +47,7 @@ jobs:
 
       - name: Install hugo
         run: |
-          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest          
-
-      - name: Install emacs
-        run: |
-          sudo apt-get install emacs
-
-      - name: Install ox-hugo
-        run: |
-          emacs --batch --eval "(progn
-          (require 'package)
-          (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
-          (package-initialize)
-          (package-refresh-contents)
-          (package-install 'ox-hugo))"
-
-      - name: Convert Org files to Hugo Markdown
-        run: |
-          emacs --batch -l ~/.emacs.d/init.el \
-          --eval "(require 'ox-hugo)" \
-          --eval "(dolist (file (directory-files-recursively \"./entries\" \"\\.org$\")) \
-                    (with-current-buffer (find-file-noselect file) \
-                      (org-hugo-export-wim-to-md)))"
+          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest    
 
       - name: Build blog
         run: |
