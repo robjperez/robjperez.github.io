@@ -6,7 +6,7 @@
 
 Hi *how* ~are~ /you/ doing?
 
-[Link][asd]
+[[Link][https://robjperez.github.io]]
 
 ** Subtitle
 
@@ -19,3 +19,16 @@ Hi *how* ~are~ /you/ doing?
 
 
 *** Sub Sub title
+
+#+BEGIN_SRC javascript
+const a = 10;
+for (let i=0; i < a; ++i) {
+  console.log(i);
+}
+#+END_SRC
+
+#+BEGIN_SRC python
+def a:
+  print("hola")
+
+#+END_SRC
