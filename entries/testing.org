@@ -6,7 +6,7 @@
 
 Hi *how* ~are~ /you/ doing?
 
-[[Link][https://robjperez.github.io]]
+[[https://robjperez.github.io][Link to blog]]
 
 ** Subtitle
 
