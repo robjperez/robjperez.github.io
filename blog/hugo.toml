@@ -10,7 +10,7 @@ weight = 10
 
 [[menu.main]]
 name = "Blog"
-pageRef = "/blog"
+pageRef = "/posts"
 weight = 20
 
 [services.rss]

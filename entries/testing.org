@@ -1,0 +1,21 @@
+#+AUTHOR: Roberto
+#+TITLE: Testing entry
+#+HUGO_BASE_DIR: ../blog
+
+* Title
+
+Hi *how* ~are~ /you/ doing?
+
+[Link][asd]
+
+** Subtitle
+
+- List
+- Lis2
+
+1. List
+2. List2
+
+
+
+*** Sub Sub title

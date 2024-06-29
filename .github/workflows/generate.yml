@@ -30,15 +30,35 @@ jobs:
         with:
           go-version: '1.21.x'
 
-      - name: Install dependencies
+      - name: Install hugo
         run: |
-          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
-          go mod download 
+          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest          
+
+      - name: Install emacs
+        run: |
+          sudo apt-get install emacs
+
+      - name: Install ox-hugo
+        run: |
+          emacs --batch --eval "(progn
+          (require 'package)
+          (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)
+          (package-initialize)
+          (package-refresh-contents)
+          (package-install 'ox-hugo))"
+
+      - name: Convert Org files to Hugo Markdown
+        run: |
+          emacs --batch -l ~/.emacs.d/init.el \
+          --eval "(require 'ox-hugo)" \
+          --eval "(dolist (file (directory-files-recursively \"./entries\" \"\\.org$\")) \
+                    (with-current-buffer (find-file-noselect file) \
+                      (org-hugo-export-wim-to-md)))"
 
       - name: Build blog
         run: |
           export PATH=$PATH:~/go/bin
-          bash generate_blog.sh
+          cd blog && hugo
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
