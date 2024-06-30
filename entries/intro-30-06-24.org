@@ -1,0 +1,19 @@
+#+AUTHOR: Roberto
+#+TITLE: Welcome to the blog
+#+DATE: 2024-06-30
+#+HUGO_BASE_DIR: ../blog
+
+* Welcome to the blog
+
+Hey!
+Welcome to the blog! Finally after some time playing with different alternatives I think I have finally found a cool way to write and generate the blog
+
+I have two main objectives with the blog:
+- Share things I find interesting in case it can help anybody else
+- Keep record on what I'm doing so I can come back at some point and enjoy what I wrote :)
+
+This is not my first attempt on writing something. I wrote for a couple of years in [[https://zbutton.wordpress.com][this site]] (sorry it is in spanish), and I still enjoy going back and read myself from the past.
+
+Nowadays I'm intested in Real Time Communications, Graphics Programming, Game developing, Linux, Emacs and AI, so expect the contents being related to this.
+
+I hope you find something useful in here!
