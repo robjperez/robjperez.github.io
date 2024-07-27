@@ -1,0 +1,99 @@
+#+AUTHOR: Roberto
+#+TITLE: How is this blog generated
+#+DATE: 2024-07-27
+#+HUGO_BASE_DIR: ../blog
+
+* How is this blog writen and generated
+
+This is the very first entry in the blog and it is about how it is
+generated and written.
+
+** Write blog entries just as an excuse to use Emacs?
+
+Periodically I'm attracted to use Emacs as much as I can in my day to
+day routines. Sometimes this impulse last a month, some other times
+just one week, but this time it looks like it is lasting a little bit
+more :) Under this premise, and mainly to have some fun, I wanted to
+use Emacs, and by extension, org-mode to write the entries of the blog
+and somehow, get them published online, in this entry I will explain
+how I'm doing that.
+
+** org-mode enters in the room
+
+As you may expect, entries originally are just .org files, which, in
+case you don't know, are basically plain text files, you can write
+them in any text editor, even online, but as I mentioned, all of this
+was partly to have fun with Emacs, so I'm using it to write them.
+
+If you are not familiar with org-mode you may think that it is
+something like markup language, but in fact, org-mode is a lot more, I
+won't enter into more details in this post since it is out of scope,
+but you could use it to do a lot of tasks like, writing documents, use
+it as a agenda with taks, notes, appointments, etc. Or even doing
+[[https://orgmode.org/worg/org-contrib/babel/how-to-use-Org-Babel-for-R.html][literate programming]], check its [[https://orgmode.org][website]] for more details.
+
+** Static websites generator
+
+Once I knew how to write the entries, next step was how to put them
+online so anyone can read them.
+One of the options that I liked the most was to just build a static
+site where everything is only HTML and JS, no hosting, or blogging
+platform would need to be involved.
+
+Nowadays are plently of options to take a bunch of files and convert
+them to HTML. After testing different options I ended using [[https://gohugo.io][Hugo]] to do
+this job.
+
+Hugo, which is written in go, takes a folder with markdown files, and
+render them as html. In fact, hugo is pretty advanced, it has a lot of
+templates to render your html, it can be extended with modules to add
+things like indexing and searching.
+
+For now I'm using the most basic things, which is serving for my
+purpose pretty well.
+
+** Publishing org files
+
+Ok, so we have ~Hugo~ to /pretty print/ the blog, and we have a bunch
+of org-mode files that needs to be published.
+
+Hugo [[https://discourse.gohugo.io/t/how-to-use-org-mode-with-hugo/6430/14][by itself]] can render ~org~ files, but its compatibility is
+somehow limited.
+
+The other alternative is to convert those ~org~ files to markdown
+using the hugo /headers/, and here is where Emacs and org-mode is
+shining again.
+
+Using [[https://ox-hugo.scripter.co][ox-hugo]] Emacs pacakge, you can convert them without losing any
+of the org-mode richness. And this is what I did, finally the plan was
+
+- Write blog entries using org-mode and an excuse to use Emacs
+- Use Hugo to generate a static blog site that you can deploy it easily
+- Use ox-hugo to convert the blog post entries and let hugo do its magic
+
+** Automatizing the process and deploying it
+
+With all the pieces set, the last step was to make it work :)
+I chose github pages to host the blog, it is free, and it is easy to
+publish some static content as the final product will be.
+
+The blog is made of two folders:
+
+1. ~entries~, where all the org files are, the core of the blog
+2. ~blog~, where Hugo customization files are.
+
+The building process, running as a github actions workflow consist of:
+
+1. Install Go and Hugo
+2. Install Emacs B)
+3. Run a small script writen in ~elisp~ that installs ~ox-hugo~ and
+   convert all files to markdown to be processed by hugo
+4. Run Hugo to generate the static site
+5. Push it to github pages
+   
+You can take a look to the [[https://github.com/robjperez/robjperez.github.io/tree/main][repo]] and the
+[[https://github.com/robjperez/robjperez.github.io/blob/main/.github/workflows/generate.yml][workflow file]] if you are curious.
+
+The workflow is generated on every commit to the ~main~ branch, so in
+order to publish a new entry, you just need to create a new file in
+the ~entries~ folder and let github actions runner do the magic.
